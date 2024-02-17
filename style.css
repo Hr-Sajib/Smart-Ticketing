@@ -1,0 +1,18 @@
+.font-ubuntu{
+    font-family: "Ubuntu", sans-serif;
+}
+.font-raleway{
+    font-family: "Raleway", sans-serif;
+}
+.bg-with-gradient {
+    /* Set the background image */
+    background-image: url('path/to/background-image.jpg');
+
+    /* Set a gradient overlay */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.467), rgba(135, 130, 130, 0)), url('images/banner.png');
+    
+    /* Additional background properties */
+    background-size: cover;
+    background-position: center;
+}
+
