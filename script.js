@@ -51,7 +51,7 @@ function scrollToSection(sectionId) {
 
             //selected seat bg to green 
             changeBgToGreen(clickedSeatId);
-            
+              
             //disable the selected seat
             document.getElementById(clickedSeatId).classList.add('pointer-events-none');
             
@@ -63,6 +63,19 @@ function scrollToSection(sectionId) {
             const emptySeats = parseInt(document.getElementById('emptySeatCount').innerText)
             document.getElementById('emptySeatCount').innerText = emptySeats-1;
 
+            // add tickets to price list
+            const newTicket = document.createElement('div');
+            const newTID = 'T'+ clickedSeatId;
+            newTicket.innerHTML = `<div class="flex justify-around pt-2 font-bold text-green-700"><p id="${newTID}">C2</p><p>Economy</p><p>550</p></div>`
+            document.getElementById('ticketList').appendChild(newTicket);
+            document.getElementById(newTID).innerText = clickedSeatId;
+
+            // update total price
+            const totalPrice = parseInt(document.getElementById('totalPriceTk').innerText);
+            const updatedPrice = totalPrice + 550;
+            document.getElementById('totalPriceTk').innerText = updatedPrice;
+            document.getElementById('grandTotalTk').innerText = updatedPrice;
+
 
 
             seatSelected.push(clickedSeatId);
@@ -71,6 +84,30 @@ function scrollToSection(sectionId) {
             if(seatSelected.length ===4){
                 disableOtherSeats(seatArray,seatSelected);
                 
+                //enable coupon button 
+                document.getElementById('applyCpnBtn').removeAttribute('disabled')
+
+                //add discount
+                document.getElementById('applyCpnBtn').addEventListener('click',function(){
+
+                    console.log('apply click')
+
+                    const grdTotal = document.getElementById('grandTotalTk').innerText;
+                    let updatedGrdTotal=0;
+
+                    if(document.getElementById('couponInput').value === 'NEW15'){
+                         updatedGrdTotal = grdTotal - (grdTotal*(15/100));
+                    }
+                    else if(document.getElementById('couponInput').value === 'Couple 20'){
+                         updatedGrdTotal = grdTotal - (grdTotal*(20/100));
+                    }
+
+                    document.getElementById('grandTotalTk').innerText = updatedGrdTotal;
+                })
+
+              
+
+
             }
         }
     })
