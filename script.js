@@ -25,7 +25,6 @@ function disableOtherSeats(seatArray,seatSelected){
 
 
 
-
 // ________main proc_____________________________________________________ //
 
 
@@ -59,9 +58,13 @@ function scrollToSection(sectionId) {
             const canBook = parseInt(document.getElementById('canBookSeatCount').innerText)
             document.getElementById('canBookSeatCount').innerText = canBook-1;
 
-            // edit can book count
+            // edit empty seat count
             const emptySeats = parseInt(document.getElementById('emptySeatCount').innerText)
             document.getElementById('emptySeatCount').innerText = emptySeats-1;
+
+            // edit selected seat count
+            const selSeats = parseInt(document.getElementById('seatSelectCount').innerText)
+            document.getElementById('seatSelectCount').innerText = selSeats+1;
 
             // add tickets to price list
             const newTicket = document.createElement('div');
@@ -77,9 +80,12 @@ function scrollToSection(sectionId) {
             document.getElementById('grandTotalTk').innerText = updatedPrice;
 
 
-
+            // update array of selected seats
             seatSelected.push(clickedSeatId);
-            console.log(seatSelected)
+            console.log(seatSelected) 
+
+            // handle the NEXT button
+            nextBtnHandle();
             
             if(seatSelected.length ===4){
                 disableOtherSeats(seatArray,seatSelected);
@@ -90,20 +96,41 @@ function scrollToSection(sectionId) {
                 //add discount
                 document.getElementById('applyCpnBtn').addEventListener('click',function(){
 
-                    console.log('apply click')
 
                     const grdTotal = document.getElementById('grandTotalTk').innerText;
                     let updatedGrdTotal=0;
 
                     if(document.getElementById('couponInput').value === 'NEW15'){
                          updatedGrdTotal = grdTotal - (grdTotal*(15/100));
+                         document.getElementById('applyCpnBtn').innerText = 'Applied';
+                         document.getElementById('couponInput').classList.add('hidden');
+                         const b =document.getElementById('applyCpnBtn');
+                         b.disabled = true;
+
                     }
                     else if(document.getElementById('couponInput').value === 'Couple 20'){
                          updatedGrdTotal = grdTotal - (grdTotal*(20/100));
+                         document.getElementById('applyCpnBtn').innerText = 'Applied';
+                         document.getElementById('couponInput').classList.add('hidden');
+                         const b =document.getElementById('applyCpnBtn');
+                         b.disabled = true;
+
+                    }
+                    else{
+                        updatedGrdTotal = grdTotal;
+
+                        alert('Enter a Valied Coupon!')
                     }
 
                     document.getElementById('grandTotalTk').innerText = updatedGrdTotal;
+
+
+
+
+
                 })
+
+
 
               
 
@@ -111,5 +138,23 @@ function scrollToSection(sectionId) {
             }
         }
     })
+
+function nextBtnHandle(){
+    
+    document.getElementById('phoneNumber').addEventListener('input',function(){
+            const nextButton = document.getElementById('nextBtn');
+            nextButton.disabled = false;         
+    })
+
+    document.getElementById('nextBtn').addEventListener('click', function(){
+        document.getElementById('headDiv').classList.add('hidden');
+        document.getElementById('mainSec').classList.add('hidden');
+        document.getElementById('footerDiv').classList.add('hidden');
+        document.getElementById('lastPage').classList.remove('hidden');
+    })
+
+}
+
+    
 
 
